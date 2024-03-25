@@ -6,7 +6,7 @@ services:
     volumes:
       - ./frontend:/app # Live development source code mounting
     ports:
-      - "5173:5173" # Assurez-vous que cela correspond au port exposé dans votre Dockerfile frontend
+      - "5173:5173" # Make sure it matches the port exposed in your frontend Dockerfile.
     networks:
       - app-network
 
