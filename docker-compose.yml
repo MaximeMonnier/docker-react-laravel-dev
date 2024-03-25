@@ -1,0 +1,63 @@
+version: '3.7'
+services:
+  frontend:
+    build:
+      context: ./frontend
+    volumes:
+      - ./frontend:/app # Montage du code source pour le développement en direct
+    ports:
+      - "5173:5173" # Assurez-vous que cela correspond au port exposé dans votre Dockerfile frontend
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./backend/
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      APP_ENV: development # Définir l'environnement de développement
+    volumes:
+      - ./backend:/var/www # Montage du code source pour le développement en direct
+      - /var/www/vendor # Exclure vendor du montage
+    ports:
+      - "8000:80" # Assurez-vous que cela correspond au port exposé par votre serveur web dans le conteneur
+    networks:
+      - app-network
+      - db
+
+  appdb:
+    image: mysql:5.7
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./initdb:/docker-entrypoint-initdb.d
+      - mysql-data:/var/lib/mysql # Persister les données MySQL entre les redémarrages du conteneur
+    ports:
+      - "3306:3306"
+    networks:
+      - db
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: appdb
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      - appdb
+    ports:
+      - "8443:80"
+    networks:
+      - db
+
+networks:
+  app-network:
+    driver: bridge
+  db:
+
+volumes:
+  mysql-data: # Définition du volume pour persister les données MySQL
