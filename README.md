@@ -1,14 +1,14 @@
 # Docker Container for Laravel and React
 
-### A small setup to dockerize your development environment with Laravel and React TypeScript.
+### A small setup to dockerize your development environment with Laravel 10 and React TypeScript.
 
 ## How to install 🛠️
 
-(Using Docker Desktop)
+[Using Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
 - Clone the repositories.
 - Configure the '.env' file.
-- Check the docker-compose fil
+- Check the docker-compose [See the file for details](https://github.com/MaximeMonnier/docker-react-laravel-dev/blob/main/docker-compose.yml).
 
 ### Frontend 📱
 
@@ -16,15 +16,17 @@
 
 - Install the frontend part with 'npm install'.
 - Test the server with 'npm run dev'.
-- Configure the 'vite.config.ts' file. See the file for details.
-- Create the Dockerfile and configure it. See the file for details.
+- Configure the 'vite.config.ts' [file. See the file for details](https://github.com/MaximeMonnier/docker-react-laravel-dev/blob/main/frontend/vite.config.ts) .
+- Create the Dockerfile and configure it. [See the file for details](https://github.com/MaximeMonnier/docker-react-laravel-dev/blob/main/frontend/Dockerfile).
 
 ### Backend 🗄️
+
+[Laravel](https://laravel.com/)
 
 - Install the backend part with 'composer install'.
 - Test the server with 'php artisan serve'.
 - Configure the environment variables to connect to your database.
-- Create the Dockerfile and configure it. See the file for details.
+- Create the Dockerfile and configure it. [See the file for details](https://github.com/MaximeMonnier/docker-react-laravel-dev/blob/main/backend/Dockerfile).
 
 ### Docker 🐋
 
