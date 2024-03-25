@@ -2,9 +2,11 @@
 
 ### A small setup to dockerize your development environment with Laravel and React TypeScript.
 
-## How to install
+## How to install 🛠️
 
 - cloner le repositories
+- configurer le fichier '.env' 
+- Verifier le fichier docker-compose 
 
 ### Frontend
 
