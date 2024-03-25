@@ -12,6 +12,8 @@
 
 ### Frontend 📱
 
+[vite.js](https://vitejs.dev/)
+
 - Install the frontend part with 'npm install'.
 - Test the server with 'npm run dev'.
 - Configure the 'vite.config.ts' file. See the file for details.
