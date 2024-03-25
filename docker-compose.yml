@@ -4,7 +4,7 @@ services:
     build:
       context: ./frontend
     volumes:
-      - ./frontend:/app # Montage du code source pour le développement en direct
+      - ./frontend:/app # Live development source code mounting
     ports:
       - "5173:5173" # Assurez-vous que cela correspond au port exposé dans votre Dockerfile frontend
     networks:
@@ -17,12 +17,12 @@ services:
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      APP_ENV: development # Définir l'environnement de développement
+      APP_ENV: development # Define the development environment
     volumes:
-      - ./backend:/var/www # Montage du code source pour le développement en direct
-      - /var/www/vendor # Exclure vendor du montage
+      - ./backend:/var/www # Live development source code mounting
+      - /var/www/vendor # Exclude the 'vendor' directory from the mounting
     ports:
-      - "8000:80" # Assurez-vous que cela correspond au port exposé par votre serveur web dans le conteneur
+      - "8000:80" # Make sure it matches the port exposed by your web server in the container
     networks:
       - app-network
       - db
@@ -35,7 +35,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./initdb:/docker-entrypoint-initdb.d
-      - mysql-data:/var/lib/mysql # Persister les données MySQL entre les redémarrages du conteneur
+      - mysql-data:/var/lib/mysql # Persist MySQL data between container restarts
     ports:
       - "3306:3306"
     networks:
@@ -60,4 +60,4 @@ networks:
   db:
 
 volumes:
-  mysql-data: # Définition du volume pour persister les données MySQL
+  mysql-data: # Definition of volume for persisting MySQL data

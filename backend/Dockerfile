@@ -1,35 +1,35 @@
 FROM webdevops/php-nginx:8.3-alpine
 
-# Installation des dépendances nécessaires, y compris mysql-client
+# Install necessary dependencies, including mysql-client
 RUN apk add --no-cache oniguruma-dev libxml2-dev nodejs npm mysql-client
 
-# Installation de PHP extensions
+# Install PHP extensions
 RUN docker-php-ext-install bcmath ctype fileinfo mbstring pdo_mysql xml
 
-# Installation de Composer
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Définir le répertoire racine du document Web pour Nginx
+# Set the web document root directory for Nginx
 ENV WEB_DOCUMENT_ROOT /app/public
 
-# Définir le répertoire de travail
+# Set the working directory
 WORKDIR /app
 
-# Copier le code source de l'application dans le répertoire de travail
+# Copy the application source code into the working directory
 COPY . .
 
-# Installer les dépendances Composer
-# En mode développement, vous pouvez vouloir inclure les dépendances de développement
+# Install Composer dependencies
+# In development mode, you may want to include development dependencies
 RUN composer install --no-interaction
 
-# Copier .env.example vers .env si .env n'existe pas
+# Copy .env.example to .env if .env does not exist
 RUN if [ ! -f .env ]; then cp .env.example .env; fi
 
-# Installer les dépendances npm et compiler les assets (si nécessaire)
+# Install npm dependencies and compile assets (if necessary)
 RUN npm install
 
-# S'assurer que les fichiers sont possédés par l'utilisateur 'application'
+# Ensure files are owned by the 'application' user
 RUN chown -R application:application .
 
-# Exposer le port 80 pour accéder à Nginx
+# Expose port 80 to access Nginx
 EXPOSE 80
